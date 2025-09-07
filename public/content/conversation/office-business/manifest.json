@@ -1,17 +1,8 @@
 {
   "category_id": "office-business",
   "category_name_zh": "辦公與商務",
-  "updated_at": "2025-09-07",
+  "updated_at": "2025-09-08",
   "items": [
-    {
-      "id": "ent-kickoff-001",
-      "title_en": "Project Kickoff Meeting",
-      "title_zh": "專案啟動會議",
-      "level": "TOEIC-600-700",
-      "estimated_duration_sec": 30,
-      "speakers": 2,
-      "path": "/content/conversation/office-business/ent-kickoff-001.json"
-    },
     {
       "id": "office-basic-request-001",
       "title_en": "Requesting Help with Printing",
@@ -20,6 +11,15 @@
       "estimated_duration_sec": 30,
       "speakers": 2,
       "path": "/content/conversation/office-business/office-basic-request-001.json"
+    },
+    {
+      "id": "office-report-001",
+      "title_en": "Monthly Report Discussion",
+      "title_zh": "月報討論",
+      "level": "TOEIC-600-700",
+      "estimated_duration_sec": 48,
+      "speakers": 2,
+      "path": "/content/conversation/office-business/office-report-001.json"
     }
   ]
 }

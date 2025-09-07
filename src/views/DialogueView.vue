@@ -77,11 +77,15 @@
 
 <script setup>
 import { onMounted, onBeforeUnmount, ref, watch, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useTtsStore } from '@/stores/tts';
 import { withBase } from '@/utils/base-url'; // 你專案原本的工具（會套 BASE_URL）
+import { usePlayQueue } from '@/stores/playQueue'
+
+const queue = usePlayQueue()
 
 const route = useRoute();
+const router = useRouter();
 const tts = useTtsStore();
 
 const category = ref(route.params.category);
@@ -105,6 +109,9 @@ const canNext = computed(() => index.value < turns.value.length - 1);
 // 播放狀態（vocab）
 const vocabSpeaking = ref(false);
 
+// 新增：控制是否已念過標題
+const titleSpoken = ref(false)
+
 function mapSpeakerToWhich() {
   const map = {};
   const sp = data.value?.speakers || [];
@@ -127,44 +134,69 @@ function avatarInitial(t) {
 }
 
 async function load() {
-  loading.value = true;
-  error.value = null;
-  data.value = null;
+  loading.value = true
+  error.value = null
+  data.value = null
+  titleSpoken.value = false
   try {
-    const path = withBase(`content/conversation/${category.value}/${dialogueId.value}.json`);
-    const r = await fetch(path, { headers: { 'Cache-Control': 'no-cache' } });
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    data.value = await r.json();
-    speakerMap.value = mapSpeakerToWhich();
-    index.value = 0;
-    if (supported && !tts.ready) await tts.init();
+    const url = withBase(`content/conversation/${category.value}/${dialogueId.value}.json`)
+    const r = await fetch(url, { headers: { 'Cache-Control': 'no-cache' } })
+    if (!r.ok) throw new Error(`HTTP ${r.status}`)
+    data.value = await r.json()
+    speakerMap.value = mapSpeakerToWhich()
+    index.value = 0
+    if (supported && !tts.ready) await tts.init()
+
+    // 若需要先念標題
+    if (queue.speakTitleFirst && data.value?.title) {
+      titleSpoken.value = true
+      tts.speak(String(data.value.title), 'A', {
+        onend: () => {
+          // 標題念完再開始內文連播（若使用者按了播放/自動播放）
+          if (autoplay.value) playCurrent()
+        },
+        onerror: () => {
+          if (autoplay.value) playCurrent()
+        }
+      })
+    } else {
+      // 沒設定就照原本邏輯
+      if (autoplay.value) playCurrent()
+    }
   } catch (e) {
-    error.value = e?.message || String(e);
+    error.value = e?.message || String(e)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 
 // —— 對話播放 ——
 function playCurrent() {
-  if (!supported || !turns.value.length) return;
-  const t = turns.value[index.value];
-  if (!t || !t.en) return;
-  const which = whichForTurn(t);
+  if (!supported || !turns.value.length) return
+  const t = turns.value[index.value]
+  if (!t || !t.en) return
+  const which = whichForTurn(t)
   tts.speak(t.en, which, {
     onend: () => {
-      if (!autoplay.value) return;
+      if (!autoplay.value) return
       if (index.value < turns.value.length - 1) {
-        index.value += 1;
-        scrollIntoView(index.value);
-        setTimeout(playCurrent, 40);
+        index.value += 1
+        scrollIntoView(index.value)
+        setTimeout(playCurrent, 40)
       } else {
-        playing.value = false;
+        // 這一篇播完了，嘗試連播下一篇
+        const nextItem = queue.next()
+        if (nextItem) {
+          // 導向下一篇（會觸發 watch(route) → load()）
+          router.push({ name: 'dialogue', params: { category: nextItem.categoryId, dialogueId: nextItem.dialogueId } })
+        } else {
+          playing.value = false
+        }
       }
     },
-    onstart: () => { playing.value = true; },
-    onerror: () => { playing.value = false; }
-  });
+    onstart: () => { playing.value = true },
+    onerror: () => { playing.value = false }
+  })
 }
 
 function togglePlay() {

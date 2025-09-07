@@ -1,0 +1,76 @@
+{
+  "id": "office-report-001",
+  "title": "Monthly Report Discussion",
+  "title_zh": "月報討論",
+  "topic": "office-business",
+  "level": "TOEIC-600-700",
+  "speakers": [
+    { "id": "A", "name": "Nina" },
+    { "id": "B", "name": "Kevin" }
+  ],
+  "turns": [
+    {
+      "speaker": "A",
+      "en": "Hi Kevin, have you started working on the monthly report?",
+      "zh": "嗨 Kevin，你開始做月報了嗎？"
+    },
+    {
+      "speaker": "B",
+      "en": "Yes, I’ve gathered most of the sales data. I still need the marketing numbers, though.",
+      "zh": "有，我已經收集了大部分銷售數據。不過我還需要行銷部的數據。"
+    },
+    {
+      "speaker": "A",
+      "en": "I can follow up with the marketing team. Do you want me to request it by email?",
+      "zh": "我可以去催一下行銷部。你要我用 email 要求嗎？"
+    },
+    {
+      "speaker": "B",
+      "en": "That would be great. Please ask for the figures from August 1st to 31st.",
+      "zh": "那太好了。請幫我要 8 月 1 號到 31 號的數據。"
+    },
+    {
+      "speaker": "A",
+      "en": "Got it. Also, do you need help with the charts or formatting?",
+      "zh": "了解。另外，你需要我幫忙做圖表或排版嗎？"
+    },
+    {
+      "speaker": "B",
+      "en": "Actually, yes. If you could handle the formatting, I can focus on the summary section.",
+      "zh": "其實可以。如果你能處理排版，我就可以專心寫總結部分。"
+    },
+    {
+      "speaker": "A",
+      "en": "No problem. What’s our deadline again?",
+      "zh": "沒問題。請問我們的截止日是什麼時候？"
+    },
+    {
+      "speaker": "B",
+      "en": "The report is due by next Wednesday, so we still have a few days.",
+      "zh": "報告下週三前要交，我們還有幾天。"
+    },
+    {
+      "speaker": "A",
+      "en": "Perfect. Let’s check in again on Monday to review the progress.",
+      "zh": "太好了。那我們星期一再確認進度吧。"
+    },
+    {
+      "speaker": "B",
+      "en": "Sounds good. Thanks for your help, Nina.",
+      "zh": "好啊。謝謝你的幫忙，Nina。"
+    }
+  ],
+  "vocab": [
+    { "word": "monthly report", "cn": "月報" },
+    { "word": "sales data", "cn": "銷售數據" },
+    { "word": "figures", "cn": "數據，數字" },
+    { "word": "formatting", "cn": "排版格式" },
+    { "word": "deadline", "cn": "截止日" },
+    { "word": "summary section", "cn": "總結部分" },
+    { "word": "review the progress", "cn": "檢視進度" }
+  ],
+  "metadata": {
+    "created_at": "2025-09-08",
+    "version": 1
+  }
+}

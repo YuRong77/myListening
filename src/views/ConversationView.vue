@@ -35,6 +35,20 @@
         <small style="opacity:.75;margin-left:8px;">{{ currentCategory?.name_en }}</small>
       </template>
 
+      <!-- 新增：工具列（多選/連播控制） -->
+      <div class="toolbar">
+        <label class="opt">
+          <input type="checkbox" v-model="speakTitleFirst" />
+          播放前先念標題
+        </label>
+        <div class="spacer"></div>
+        <button class="btn ghost" @click="selectAll" :disabled="!manifestItems.length">全選</button>
+        <button class="btn ghost" @click="clearAll" :disabled="selectedIds.size === 0">清除</button>
+        <button class="btn primary" @click="playSelected" :disabled="selectedIds.size === 0">
+          ▶️ 連播選取（{{ selectedIds.size }}）
+        </button>
+      </div>
+
       <div v-if="manifestLoading" class="list-skeleton">
         <div class="s-row" v-for="n in 8" :key="n"></div>
       </div>
@@ -45,18 +59,28 @@
 
       <ul v-else class="list">
         <li v-for="item in manifestItems" :key="item.id">
-          <button class="row" @click="openDialogue(item)">
-            <div class="titles">
-              <div class="en">{{ item.title_en || item.title || item.id }}</div>
-              <div class="zh" v-if="item.title_zh">{{ item.title_zh }}</div>
-            </div>
-            <div class="meta">
-              <span v-if="item.level" class="tag">{{ item.level }}</span>
-              <span v-if="item.estimated_duration_sec" class="tag">{{ Math.round(item.estimated_duration_sec / 60) }}
-                min</span>
-              <span v-if="item.speakers" class="tag">{{ item.speakers }} speakers</span>
-            </div>
-          </button>
+          <div class="row">
+            <!-- 新增：多選 checkbox；點擊不影響單篇開啟 -->
+            <label class="chk" @click.stop>
+              <input type="checkbox" :value="item.id" :checked="selectedIds.has(item.id)"
+                @change="toggleSelect(item.id, $event)" />
+            </label>
+
+            <!-- 原本的單篇開啟按鈕 -->
+            <button class="entry" @click="openDialogue(item)">
+              <div class="titles">
+                <div class="en">{{ item.title_en || item.title || item.id }}</div>
+                <div class="zh" v-if="item.title_zh">{{ item.title_zh }}</div>
+              </div>
+              <div class="meta">
+                <span v-if="item.level" class="tag">{{ item.level }}</span>
+                <span v-if="item.estimated_duration_sec" class="tag">
+                  {{ Math.round(item.estimated_duration_sec / 60) }} min
+                </span>
+                <span v-if="item.speakers" class="tag">{{ item.speakers }} speakers</span>
+              </div>
+            </button>
+          </div>
         </li>
       </ul>
     </SimpleModal>
@@ -69,14 +93,20 @@
 import { onMounted, computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useContentStore } from '@/stores/content';
+import { usePlayQueue } from '@/stores/playQueue'  // ← 前面訊息提供過的連播佇列 store
 import SimpleModal from '@/components/SimpleModal.vue';
 
 const router = useRouter();
 const store = useContentStore();
+const queue = usePlayQueue()
 
 const showModal = ref(false);
 const currentCategory = ref(null);
 const manifestItems = ref([]);
+
+// 新增：多選狀態與選項
+const selectedIds = ref(new Set())
+const speakTitleFirst = ref(true)
 
 onMounted(() => {
   store.loadCategories();
@@ -134,6 +164,43 @@ function openDialogue(item) {
   const dialogueId = m?.[2] || item.id || 'unknown';
   closeModal();
   router.push({ name: 'dialogue', params: { category, dialogueId } });
+}
+
+// 勾選/全選/清除/連播
+function toggleSelect(id, e) {
+  const s = new Set(selectedIds.value)
+  if (e.target.checked) s.add(id)
+  else s.delete(id)
+  selectedIds.value = s
+}
+function selectAll() {
+  const s = new Set()
+  manifestItems.value.forEach(it => s.add(it.id))
+  selectedIds.value = s
+}
+function clearAll() {
+  selectedIds.value = new Set()
+}
+function playSelected() {
+  const catId = currentCategory?.value?.id || currentCategory?.id || ''
+  const picked = manifestItems.value
+    .filter(it => selectedIds.value.has(it.id))
+    .map(it => ({
+      categoryId: catId,
+      dialogueId: it.id,
+      title: it.title_en || it.title || it.id,
+      path: it.path
+    }))
+  if (!picked.length) return
+
+  // 設定佇列（包含「播放前先念標題」選項）
+  queue.setQueue(picked, { speakTitleFirst: speakTitleFirst.value })
+
+  // 導向第一篇
+  const first = picked[0]
+  router.push({ name: 'dialogue', params: { category: first.categoryId, dialogueId: first.dialogueId } })
+  // 若你希望關掉 popup：
+  if (typeof closeModal === 'function') closeModal()
 }
 </script>
 
@@ -331,5 +398,106 @@ h1 {
   color: #93a0b5;
   font-size: 13px;
   margin-top: 12px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0 10px;
+}
+
+.toolbar .spacer {
+  flex: 1;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #c8d3e0;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.chk {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 6px;
+}
+
+.entry {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #25304d;
+  background: #0e1427;
+  color: #e7ecf5;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.entry:hover {
+  filter: brightness(1.05);
+}
+
+.titles .en {
+  font-weight: 700;
+}
+
+.titles .zh {
+  color: #93a0b5;
+}
+
+.meta {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-self: end;
+}
+
+.tag {
+  font-size: 12px;
+  color: #cbd5e1;
+  background: #1a2340;
+  border: 1px solid #2a3a6b;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.btn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #2a3a6b;
+  background: #192653;
+  color: #e7ecf5;
+  cursor: pointer;
+}
+
+.btn.primary {
+  background: linear-gradient(180deg, #5b8cff, #3a6cff);
+  border-color: #3a6cff;
+}
+
+.btn.ghost {
+  background: transparent;
 }
 </style>
