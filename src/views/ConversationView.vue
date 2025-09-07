@@ -98,9 +98,16 @@ function toTitle(id = '') {
 }
 
 const iconMap = {
-  enterprise: '🏢', meetings: '👥', office: '🗂️', dining: '🍽️',
-  entertainment: '🎬', travel: '✈️', transportation: '🚆', shopping: '🛒',
-  finance: '💳', 'customer-service': '🎧', education: '🎓', healthcare: '🏥', housing: '🏠',
+  'office-business': '🏢',
+  'hr-employment': '💼',
+  'calls-meetings': '📞',
+  'travel-transport': '✈️',
+  'dining-shopping': '🛍️',
+  'customer-support': '🎧',
+  'finance-banking': '💳',
+  'housing-living': '🏠',
+  'healthcare': '🏥',
+  'education-events': '🎓',
 };
 function iconEmoji(cat) { return iconMap[cat.id] || '📚'; }
 

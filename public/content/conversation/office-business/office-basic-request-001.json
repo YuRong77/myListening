@@ -1,0 +1,59 @@
+{
+  "id": "office-basic-request-001",
+  "title": "Requesting Help with Printing",
+  "title_zh": "請求協助列印資料",
+  "topic": "office-business",
+  "level": "TOEIC-500-600",
+  "speakers": [
+    { "id": "A", "name": "Jason" },
+    { "id": "B", "name": "Emily" }
+  ],
+  "turns": [
+    {
+      "speaker": "A",
+      "en": "Hi Emily, could you help me print the presentation for the meeting?",
+      "zh": "嗨 Emily，你可以幫我列印會議簡報嗎？"
+    },
+    {
+      "speaker": "B",
+      "en": "Sure, how many copies do you need?",
+      "zh": "當然，你需要幾份？"
+    },
+    {
+      "speaker": "A",
+      "en": "Ten copies, please. Black and white is fine.",
+      "zh": "請幫我印十份，黑白的就可以。"
+    },
+    {
+      "speaker": "B",
+      "en": "No problem. Do you have the file ready?",
+      "zh": "沒問題。你有檔案了嗎？"
+    },
+    {
+      "speaker": "A",
+      "en": "Yes, I just emailed it to you.",
+      "zh": "有，我剛剛寄給你了。"
+    },
+    {
+      "speaker": "B",
+      "en": "Got it. I’ll print them now and bring them to the meeting room.",
+      "zh": "收到了。我現在就印，等等幫你帶去會議室。"
+    },
+    {
+      "speaker": "A",
+      "en": "Thank you so much. I appreciate it!",
+      "zh": "非常感謝，真是幫大忙了！"
+    }
+  ],
+  "vocab": [
+    { "word": "presentation", "cn": "簡報" },
+    { "word": "copies", "cn": "份數" },
+    { "word": "black and white", "cn": "黑白列印" },
+    { "word": "email", "cn": "電子郵件" },
+    { "word": "meeting room", "cn": "會議室" }
+  ],
+  "metadata": {
+    "created_at": "2025-09-07",
+    "version": 1
+  }
+}

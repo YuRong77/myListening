@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const ConversationView = () => import('@/views/ConversationView.vue')
 const SettingsView = () => import('@/views/SettingsView.vue')
@@ -11,4 +11,4 @@ const routes = [
   { path: '/settings', name: 'settings', component: SettingsView },
 ]
 
-export default createRouter({ history: createWebHistory(), routes })
+export default createRouter({ history: createWebHashHistory(import.meta.env.BASE_URL), routes })
