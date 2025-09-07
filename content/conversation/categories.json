@@ -1,0 +1,122 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "enterprise",
+      "name_zh": "企業 / 商務",
+      "name_en": "Enterprise",
+      "icon": "mdi-office-building",
+      "accent": "blue",
+      "manifest": "/content/conversation/enterprise/manifest.json",
+      "estimated_count": 2
+    },
+    {
+      "id": "dining",
+      "name_zh": "外食",
+      "name_en": "Dining",
+      "icon": "mdi-silverware-fork-knife",
+      "accent": "orange",
+      "manifest": "/content/conversation/dining/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "entertainment",
+      "name_zh": "娛樂",
+      "name_en": "Entertainment",
+      "icon": "mdi-movie-open",
+      "accent": "purple",
+      "manifest": "/content/conversation/entertainment/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "travel",
+      "name_zh": "旅遊",
+      "name_en": "Travel",
+      "icon": "mdi-airplane",
+      "accent": "teal",
+      "manifest": "/content/conversation/travel/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "transportation",
+      "name_zh": "交通",
+      "name_en": "Transportation",
+      "icon": "mdi-train",
+      "accent": "indigo",
+      "manifest": "/content/conversation/transportation/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "shopping",
+      "name_zh": "購物",
+      "name_en": "Shopping",
+      "icon": "mdi-cart",
+      "accent": "pink",
+      "manifest": "/content/conversation/shopping/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "finance",
+      "name_zh": "金融 / 銀行",
+      "name_en": "Finance",
+      "icon": "mdi-cash-multiple",
+      "accent": "green",
+      "manifest": "/content/conversation/finance/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "meetings",
+      "name_zh": "會議",
+      "name_en": "Meetings",
+      "icon": "mdi-account-group",
+      "accent": "cyan",
+      "manifest": "/content/conversation/meetings/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "customer-service",
+      "name_zh": "客服 / 服務",
+      "name_en": "Customer Service",
+      "icon": "mdi-headset",
+      "accent": "amber",
+      "manifest": "/content/conversation/customer-service/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "education",
+      "name_zh": "教育",
+      "name_en": "Education",
+      "icon": "mdi-school",
+      "accent": "red",
+      "manifest": "/content/conversation/education/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "healthcare",
+      "name_zh": "醫療",
+      "name_en": "Healthcare",
+      "icon": "mdi-hospital",
+      "accent": "rose",
+      "manifest": "/content/conversation/healthcare/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "housing",
+      "name_zh": "住房 / 租屋",
+      "name_en": "Housing",
+      "icon": "mdi-home-city",
+      "accent": "lime",
+      "manifest": "/content/conversation/housing/manifest.json",
+      "estimated_count": 0
+    },
+    {
+      "id": "office",
+      "name_zh": "辦公室日常",
+      "name_en": "Office",
+      "icon": "mdi-clipboard-text",
+      "accent": "slate",
+      "manifest": "/content/conversation/office/manifest.json",
+      "estimated_count": 0
+    }
+  ]
+}
