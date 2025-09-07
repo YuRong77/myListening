@@ -9,6 +9,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "sync:conversation": "node scripts/sync-conversation.mjs",
+    "sync:count": "node scripts/update-counts.mjs",
     "preview": "vite preview",
     "test:unit": "vitest",
     "prepare": "cypress install",

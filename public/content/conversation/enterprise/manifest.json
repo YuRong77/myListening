@@ -1,0 +1,16 @@
+{
+  "category_id": "enterprise",
+  "category_name_zh": "企業 / 商務",
+  "updated_at": "2025-09-07",
+  "items": [
+    {
+      "id": "ent-kickoff-001",
+      "title_en": "Project Kickoff Meeting",
+      "title_zh": "專案啟動會議",
+      "level": "TOEIC-600-700",
+      "estimated_duration_sec": 30,
+      "speakers": 2,
+      "path": "/content/conversation/enterprise/ent-kickoff-001.json"
+    }
+  ]
+}
